@@ -1,12 +1,17 @@
 set(headers
-    include/cleanuphelper.h
-    include/cppflags.h
-    include/cppmacros.h
-    include/cppoverloadutils.h
-    include/cppsignal.h
-    include/cpptypesafeenum.h
-    include/cpputils.h
-    include/delayedconstruction.h
+    src/cleanuphelper.h
+    src/cppflags.h
+    src/cppmacros.h
+    src/cppoverloadutils.h
+    src/cppsignal.h
+    src/cpptypesafeenum.h
+    src/cpputils.h
+    src/delayedconstruction.h
+    src/strutils.h
 )
 
-idf_component_register(INCLUDE_DIRS include SRCS ${headers})
+set(sources
+    src/strutils.cpp
+)
+
+idf_component_register(INCLUDE_DIRS src SRCS ${headers} ${sources})
