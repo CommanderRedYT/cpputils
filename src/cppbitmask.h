@@ -2,7 +2,8 @@
 
 // system includes
 #include <cstdint>
-#include <stdexcept>
+#include <type_traits>
+#include <cassert>
 
 namespace cpputils {
 template<typename T>
@@ -32,16 +33,26 @@ public:
             case 'X':
                 break;
             default:
-                throw std::logic_error{"Unknown characters in bit pattern input"};
+                assert("Unknown characters in bit pattern input" && 0);
             }
 
             cur_bit >>= 1;
         }
     }
 
+    constexpr bool match(const T value) const
+    {
+        return (value & mask) == expected;
+    }
+
     constexpr friend bool operator==(const T value, const basic_bit_pattern &pattern)
     {
-        return (value & pattern.mask) == pattern.expected;
+        return pattern.match(value);
+    }
+
+    constexpr friend bool operator==(const basic_bit_pattern &pattern, const T value)
+    {
+        return pattern.match(value);
     }
 };
 
