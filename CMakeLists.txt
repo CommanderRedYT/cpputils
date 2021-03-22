@@ -1,5 +1,6 @@
 set(headers
     src/cleanuphelper.h
+    src/cppbitmask.h
     src/crc32builder.h
     src/cppflags.h
     src/cppmacros.h

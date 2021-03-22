@@ -1,5 +1,6 @@
 HEADERS += \
     $$PWD/src/cleanuphelper.h \
+    $$PWD/src/cppbitmask.h \
     $$PWD/src/cppflags.h \
     $$PWD/src/cppmacros.h \
     $$PWD/src/cppoverloadutils.h \
