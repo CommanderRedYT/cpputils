@@ -14,7 +14,7 @@ class basic_bit_pattern
 
 public:
     template<std::size_t Size>
-    explicit constexpr basic_bit_pattern(const char (&input)[Size])
+    constexpr basic_bit_pattern(const char (&input)[Size])
     {
         T cur_bit = (1 << (Size - 2));
         for (const char val : input)
