@@ -49,14 +49,10 @@ public:
         return (value & mask) == expected;
     }
 
-    constexpr friend bool operator==(const T value, const basic_bit_pattern &pattern)
+    constexpr friend bool operator==(const basic_bit_pattern &l, const basic_bit_pattern &r)
     {
-        return pattern.match(value);
-    }
-
-    constexpr friend bool operator==(const basic_bit_pattern &pattern, const T value)
-    {
-        return pattern.match(value);
+        return l.expected == r.expected &&
+               l.mask     == r.mask;
     }
 };
 

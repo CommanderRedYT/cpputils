@@ -19,10 +19,10 @@ private slots:
         constexpr cpputils::bit_pattern pattern{"10XXX10"};
         QCOMPARE(pattern.expected, 0b1000010);
         QCOMPARE(pattern.mask, 0b1100011);
-        QVERIFY(0b1001010 == pattern);
-        QVERIFY(0b1010110 == pattern);
-        QVERIFY(!(0b1000000 == pattern));
-        QVERIFY(!(0b1100010 == pattern));
+        QVERIFY(pattern.match(0b1001010));
+        QVERIFY(pattern.match(0b1010110));
+        QVERIFY(!pattern.match(0b1000000));
+        QVERIFY(!pattern.match(0b1100010));
     }
 
     void test_copy()
