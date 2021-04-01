@@ -4,6 +4,7 @@
 
 #include <chrono>
 #include <string>
+#include <algorithm>
 
 #include "cpputilstestutils.h"
 #include "cppbitmask.h"
@@ -13,13 +14,52 @@ class TstCppBitmask : public QObject
     Q_OBJECT
 
 private slots:
-    void test_simple()
+    void test_basic_functionality()
     {
-        constexpr cpputils::bit_pattern pattern{"11XXX10"};
-        QVERIFY(0b1101010 == pattern);
-        QVERIFY(0b1110110 == pattern);
-        QVERIFY(!(0b1100000 == pattern));
-        QVERIFY(!(0b1000010 == pattern));
+        constexpr cpputils::bit_pattern pattern{"10XXX10"};
+        QCOMPARE(pattern.expected, 0b1000010);
+        QCOMPARE(pattern.mask, 0b1100011);
+        QVERIFY(0b1001010 == pattern);
+        QVERIFY(0b1010110 == pattern);
+        QVERIFY(!(0b1000000 == pattern));
+        QVERIFY(!(0b1100010 == pattern));
+    }
+
+    void test_copy()
+    {
+        const cpputils::bit_pattern pattern{"10XXX10"};
+        const cpputils::bit_pattern patternCopy{pattern};
+        QCOMPARE(patternCopy.expected, 0b1000010);
+        QCOMPARE(patternCopy.mask, 0b1100011);
+    }
+
+    void test_assign()
+    {
+        const cpputils::bit_pattern pattern{"10XXX10"};
+        cpputils::bit_pattern patternCopy{"11110000XXXX"};
+        QCOMPARE(patternCopy.expected, 0b111100000000);
+        QCOMPARE(patternCopy.mask, 0b111111110000);
+        patternCopy = pattern;
+        QCOMPARE(patternCopy.expected, 0b1000010);
+        QCOMPARE(patternCopy.mask, 0b1100011);
+    }
+
+    void test_swap()
+    {
+        cpputils::bit_pattern pattern0{"10XXX10"};
+        cpputils::bit_pattern pattern1{"11110000XXXX"};
+
+        QCOMPARE(pattern0.expected, 0b1000010);
+        QCOMPARE(pattern0.mask, 0b1100011);
+        QCOMPARE(pattern1.expected, 0b111100000000);
+        QCOMPARE(pattern1.mask, 0b111111110000);
+
+        std::swap(pattern0, pattern1);
+
+        QCOMPARE(pattern0.expected, 0b111100000000);
+        QCOMPARE(pattern0.mask, 0b111111110000);
+        QCOMPARE(pattern1.expected, 0b1000010);
+        QCOMPARE(pattern1.mask, 0b1100011);
     }
 };
 

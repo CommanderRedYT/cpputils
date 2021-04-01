@@ -5,10 +5,14 @@
 #include <type_traits>
 #include <cassert>
 
+// forward declarations
+class TstCppBitmask;
+
 namespace cpputils {
 template<typename T>
 class basic_bit_pattern
 {
+    friend class ::TstCppBitmask;
     T expected{};
     T mask{};
 
