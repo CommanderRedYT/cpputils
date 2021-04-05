@@ -5,6 +5,20 @@
 #include <cctype>
 
 namespace cpputils {
+std::string toString(bool val) { return val ? "true" : "false"; }
+std::string toString(int8_t val) { return std::to_string(val); }
+std::string toString(uint8_t val) { return std::to_string(val); }
+std::string toString(int16_t val) { return std::to_string(val); }
+std::string toString(uint16_t val) { return std::to_string(val); }
+std::string toString(int32_t val) { return std::to_string(val); }
+std::string toString(uint32_t val) { return std::to_string(val); }
+std::string toString(int64_t val) { return std::to_string(val); }
+std::string toString(uint64_t val) { return std::to_string(val); }
+std::string toString(float val) { return std::to_string(val); }
+std::string toString(double val) { return std::to_string(val); }
+std::string toString(const std::string &val) { return val; }
+std::string toString(std::optional<uint8_t> val) { if (val) return toString(*val); else return {}; }
+
 bool stringEqualsIgnoreCase(std::string_view a, std::string_view b)
 {
     return a == b; // HACK for now...
