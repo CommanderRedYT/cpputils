@@ -5,6 +5,14 @@
 
 Q_DECLARE_METATYPE(std::string)
 
+#define DECLARE_QDEBUG_OP_FOR_ENUM(Namespace, EnumName) \
+    QDebug operator<<(QDebug debug, EnumName val) \
+    { \
+        QDebugStateSaver saver(debug); \
+        debug.nospace() << #EnumName "(" << Namespace toString(val).c_str() << ')'; \
+        return debug; \
+    }
+
 // only needed if there is a nameclash between std::string *::toString(const T &) and template<typename T> char *QTest::toString(const T &)
 #define FIXEDCOMPARE(actual, expected) \
 do {\
