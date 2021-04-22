@@ -76,6 +76,20 @@ typename std::common_type<T0, T1, Ts...>::type vmin(T0&& val1, T1&& val2, Ts&&..
     else
         return vmin(val2, std::forward<Ts>(vs)...);
 }
+template<typename T>
+T vmax(T&&t)
+{
+    return std::forward<T>(t);
+}
+
+template<typename T0, typename T1, typename... Ts>
+typename std::common_type<T0, T1, Ts...>::type vmax(T0&& val1, T1&& val2, Ts&&... vs)
+{
+    if (val1 > val2)
+        return vmax(val1, std::forward<Ts>(vs)...);
+    else
+        return vmax(val2, std::forward<Ts>(vs)...);
+}
 
 template<class T>
 constexpr const T& clamp( const T& v, const T& lo, const T& hi )
