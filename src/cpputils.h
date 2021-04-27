@@ -6,7 +6,6 @@
 
 namespace cpputils {
 namespace literals {
-namespace {
 /**
  * User-defined Literals
  *  usage:
@@ -58,10 +57,8 @@ constexpr unsigned long long operator"" _GB(unsigned long long x)
 {
     return x * 1024 * 1024 * 1024;
 }
-} // namespace
 } // namespace literals
 
-namespace {
 template<typename T>
 T vmin(T&&t)
 {
@@ -109,6 +106,4 @@ bool is_in(First &&first, T && ... t)
 {
     return ((first == t) || ...);
 }
-
-} // namespace
 } // namespace cpputils
