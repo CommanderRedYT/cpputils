@@ -9,6 +9,7 @@ set(headers
     src/cpptypesafeenum.h
     src/cpputils.h
     src/delayedconstruction.h
+    src/refwhenneeded.h
     src/strutils.h
 )
 

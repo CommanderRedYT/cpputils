@@ -8,6 +8,7 @@ HEADERS += \
     $$PWD/src/cpptypesafeenum.h \
     $$PWD/src/cpputils.h \
     $$PWD/src/delayedconstruction.h \
+    $$PWD/src/refwhenneeded.h \
     $$PWD/src/strutils.h
 
 SOURCES += \
