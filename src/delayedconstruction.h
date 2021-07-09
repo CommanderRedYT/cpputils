@@ -87,6 +87,8 @@ public:
 
     bool constructed() const { return m_constructed; }
 
+    operator bool() const { return m_constructed; }
+
 private:
     bool m_constructed{};
     union Helper
