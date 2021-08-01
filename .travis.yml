@@ -30,6 +30,6 @@ addons:
       - "libqt5charts5-dev"
 
 script:
-  - "qmake test/tstcpputils.pro"
+  - "qmake CLONE_EXPECTED=1 CLONE_FMT=1 test/tstcpputils.pro"
   - "make -j2"
   - ./tstcpputils

@@ -19,6 +19,8 @@ set(sources
 )
 
 set(dependencies
+    expected
+    fmt
 )
 
 idf_component_register(
