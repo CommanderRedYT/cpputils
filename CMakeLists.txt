@@ -10,6 +10,7 @@ set(headers
     src/cpputils.h
     src/crc32builder.h
     src/delayedconstruction.h
+    src/makearray.h
     src/numberparsing.h
     src/refwhenneeded.h
     src/strutils.h
