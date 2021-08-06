@@ -1,13 +1,14 @@
 set(headers
     src/cleanuphelper.h
+    src/color_utils.h
     src/cppbitmask.h
-    src/crc32builder.h
     src/cppflags.h
     src/cppmacros.h
     src/cppoverloadutils.h
     src/cppsignal.h
     src/cpptypesafeenum.h
     src/cpputils.h
+    src/crc32builder.h
     src/delayedconstruction.h
     src/numberparsing.h
     src/refwhenneeded.h
@@ -15,6 +16,7 @@ set(headers
 )
 
 set(sources
+    src/color_utils.cpp
     src/strutils.cpp
 )
 
