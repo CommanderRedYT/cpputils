@@ -1,4 +1,5 @@
 HEADERS += \
+    $$PWD/src/arrayview.h \
     $$PWD/src/cleanuphelper.h \
     $$PWD/src/color_utils.h \
     $$PWD/src/cppbitmask.h \

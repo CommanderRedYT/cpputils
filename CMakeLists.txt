@@ -1,4 +1,5 @@
 set(headers
+    src/arrayview.h
     src/cleanuphelper.h
     src/color_utils.h
     src/cppbitmask.h
