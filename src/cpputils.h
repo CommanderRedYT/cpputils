@@ -3,6 +3,7 @@
 // system includes
 #include <utility>
 #include <type_traits>
+#include <algorithm>
 
 namespace cpputils {
 namespace literals {
@@ -99,6 +100,17 @@ template<typename T>
 T mapValue(T x, T in_min, T in_max, T out_min, T out_max)
 {
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+template<typename T>
+T mapValueClamped(T x, T in_min, T in_max, T out_min, T out_max)
+{
+    if (x < std::min(in_min, in_max))
+        x = std::min(in_min, in_max);
+    else if (x > std::max(in_min, in_max))
+        x = std::max(in_min, in_max);
+
+    return mapValue(x, in_min, in_max, out_min, out_max);
 }
 
 template<typename First, typename ... T>
