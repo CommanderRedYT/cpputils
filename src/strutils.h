@@ -62,4 +62,19 @@ std::string randomString(std::size_t length, Trandom &rng)
     return result;
 }
 
+template<typename Trandom>
+std::string randomString(std::size_t length, Trandom &&rng)
+{
+    constexpr const char chars[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
+
+    std::uniform_int_distribution dist{{}, std::size(chars) - 1};
+
+    std::string result(length, '\0');
+    std::generate_n(std::begin(result), length, [&]() { return chars[dist(rng)]; });
+    return result;
+}
+
 } // namespace cpputils
