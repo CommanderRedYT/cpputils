@@ -13,6 +13,7 @@ set(headers
     src/delayedconstruction.h
     src/makearray.h
     src/numberparsing.h
+    src/randomutils.h
     src/refwhenneeded.h
     src/strutils.h
 )

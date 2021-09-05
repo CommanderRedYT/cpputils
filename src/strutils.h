@@ -4,6 +4,8 @@
 #include <string>
 #include <optional>
 #include <string_view>
+#include <random>
+#include <algorithm>
 
 namespace cpputils {
 inline std::string toString(bool val) { return val ? "true" : "false"; }
@@ -44,4 +46,20 @@ void stringReplaceAll(std::string_view search, std::string_view replace, std::st
 std::string stringReplaceAll(char search, std::string_view replace, std::string_view subject);
 //std::string stringReplaceAll(std::string_view search, char replace, std::string_view subject);
 std::string stringReplaceAll(std::string_view search, std::string_view replace, std::string_view subject);
+
+template<typename Trandom>
+std::string randomString(std::size_t length, Trandom &rng)
+{
+    constexpr const char chars[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
+
+    std::uniform_int_distribution dist{{}, std::size(chars) - 1};
+
+    std::string result(length, '\0');
+    std::generate_n(std::begin(result), length, [&]() { return chars[dist(rng)]; });
+    return result;
+}
+
 } // namespace cpputils
