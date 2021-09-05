@@ -34,4 +34,92 @@ bool stringEndsWith(std::string_view fullString, std::string_view ending)
         return false;
     }
 }
+
+//void stringReplaceAll(char search, char replace, std::string &subject)
+//{
+//    size_t start_pos{};
+//    while ((start_pos = subject.find(search, start_pos)) != std::string::npos)
+//    {
+//        subject.replace(start_pos, 1, replace);
+//        start_pos++; // Handles case where 'replace' is a substring of 'search'
+//    }
+//}
+
+void stringReplaceAll(char search, std::string_view replace, std::string &subject)
+{
+    size_t start_pos{};
+    while ((start_pos = subject.find(search, start_pos)) != std::string::npos)
+    {
+        subject.replace(start_pos, 1, replace);
+        start_pos += replace.size(); // Handles case where 'replace' is a substring of 'search'
+    }
+}
+
+//void stringReplaceAll(std::string_view search, char replace, std::string &subject)
+//{
+//    size_t start_pos{};
+//    while ((start_pos = subject.find(search, start_pos)) != std::string::npos)
+//    {
+//        subject.replace(start_pos, search.size(), replace);
+//        start_pos++; // Handles case where 'replace' is a substring of 'search'
+//    }
+//}
+
+void stringReplaceAll(std::string_view search, std::string_view replace, std::string &subject)
+{
+    size_t start_pos{};
+    while ((start_pos = subject.find(search, start_pos)) != std::string::npos)
+    {
+        subject.replace(start_pos, search.size(), replace);
+        start_pos += replace.size(); // Handles case where 'replace' is a substring of 'search'
+    }
+}
+
+//std::string stringReplaceAll(char search, char replace, std::string_view subject)
+//{
+//    std::string str{subject};
+//    size_t start_pos{};
+//    while ((start_pos = str.find(search, start_pos)) != std::string::npos)
+//    {
+//        str.replace(start_pos, 1, replace);
+//        start_pos++; // Handles case where 'replace' is a substring of 'search'
+//    }
+//    return str;
+//}
+
+std::string stringReplaceAll(char search, std::string_view replace, std::string_view subject)
+{
+    std::string str{subject};
+    size_t start_pos{};
+    while ((start_pos = str.find(search, start_pos)) != std::string::npos)
+    {
+        str.replace(start_pos, 1, replace);
+        start_pos += replace.size(); // Handles case where 'replace' is a substring of 'search'
+    }
+    return str;
+}
+
+//std::string stringReplaceAll(std::string_view search, char replace, std::string_view subject)
+//{
+//    std::string str{subject};
+//    size_t start_pos{};
+//    while ((start_pos = str.find(search, start_pos)) != std::string::npos)
+//    {
+//        str.replace(start_pos, search.size(), replace);
+//        start_pos++; // Handles case where 'replace' is a substring of 'search'
+//    }
+//    return str;
+//}
+
+std::string stringReplaceAll(std::string_view search, std::string_view replace, std::string_view subject)
+{
+    std::string str{subject};
+    size_t start_pos{};
+    while ((start_pos = str.find(search, start_pos)) != std::string::npos)
+    {
+        str.replace(start_pos, search.size(), replace);
+        start_pos += replace.size(); // Handles case where 'replace' is a substring of 'search'
+    }
+    return str;
+}
 } // namespace cpputils

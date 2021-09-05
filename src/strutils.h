@@ -34,4 +34,14 @@ inline std::string toString(const std::optional<std::string> &val) { if (val) re
 bool stringEqualsIgnoreCase(std::string_view a, std::string_view b);
 bool stringStartsWith(std::string_view fullString, std::string_view begin);
 bool stringEndsWith(std::string_view fullString, std::string_view ending);
+
+//void stringReplaceAll(char search, char replace, std::string &subject);
+void stringReplaceAll(char search, std::string_view replace, std::string &subject);
+//void stringReplaceAll(std::string_view search, char replace, std::string &subject);
+void stringReplaceAll(std::string_view search, std::string_view replace, std::string &subject);
+
+//std::string stringReplaceAll(char search, char replace, std::string_view subject);
+std::string stringReplaceAll(char search, std::string_view replace, std::string_view subject);
+//std::string stringReplaceAll(std::string_view search, char replace, std::string_view subject);
+std::string stringReplaceAll(std::string_view search, std::string_view replace, std::string_view subject);
 } // namespace cpputils
