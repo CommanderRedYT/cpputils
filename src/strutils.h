@@ -47,34 +47,25 @@ std::string stringReplaceAll(char search, std::string_view replace, std::string_
 //std::string stringReplaceAll(std::string_view search, char replace, std::string_view subject);
 std::string stringReplaceAll(std::string_view search, std::string_view replace, std::string_view subject);
 
+constexpr const std::string_view allDigitsAndCharacters =
+    "0123456789"
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    "abcdefghijklmnopqrstuvwxyz";
+
 template<typename Trandom>
-std::string randomString(std::size_t length, Trandom &rng)
+std::string randomString(std::size_t length, std::string_view allowedChars, Trandom &rng)
 {
-    constexpr const char chars[] =
-        "0123456789"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz";
+    std::uniform_int_distribution dist{{}, allowedChars.size() - 1};
 
-    std::uniform_int_distribution dist{{}, std::size(chars) - 1};
-
-    std::string result(length, '\0');
-    std::generate_n(std::begin(result), length, [&]() { return chars[dist(rng)]; });
+    std::string result(length, {});
+    std::generate_n(std::begin(result), length, [&](){ return allowedChars[dist(rng)]; });
     return result;
 }
 
 template<typename Trandom>
-std::string randomString(std::size_t length, Trandom &&rng)
+std::string randomString(std::size_t length, std::string_view allowedChars, Trandom &&rng)
 {
-    constexpr const char chars[] =
-        "0123456789"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz";
-
-    std::uniform_int_distribution dist{{}, std::size(chars) - 1};
-
-    std::string result(length, '\0');
-    std::generate_n(std::begin(result), length, [&]() { return chars[dist(rng)]; });
-    return result;
+    return randomString(length, allowedChars, rng);
 }
 
 } // namespace cpputils
