@@ -3,7 +3,7 @@
 // system includes
 #include <array>
 
-namespace goe {
+namespace cpputils {
 namespace details {
   template<class> struct is_ref_wrapper : std::false_type {};
   template<class T> struct is_ref_wrapper<std::reference_wrapper<T>> : std::true_type {};
@@ -27,4 +27,4 @@ template < class D = void, class... Types>
 constexpr details::return_type<D, Types...> make_array(Types&&... t) {
   return {std::forward<Types>(t)... };
 }
-} // namespace goe
+} // namespace cpputils
