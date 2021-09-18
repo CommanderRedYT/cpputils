@@ -2,6 +2,7 @@
 
 // system includes
 #include <random>
+#include <limits>
 
 namespace cpputils {
 
@@ -47,10 +48,12 @@ T randomNumber(T min, T max, Trandom &&rng)
 //    return dist(rng);
 //}
 
+
+
 template<typename T, typename Trandom>
 T randomNumber(T max, Trandom &rng)
 {
-    std::uniform_int_distribution<T> dist{{}, max};
+    std::uniform_int_distribution<T> dist{std::numeric_limits<T>::min(), max};
     return dist(rng);
 }
 
@@ -71,7 +74,7 @@ T randomNumber(T max, Trandom &rng)
 template<typename T, typename Trandom>
 T randomNumber(T max, Trandom &&rng)
 {
-    std::uniform_int_distribution<T> dist{{}, max};
+    std::uniform_int_distribution<T> dist{std::numeric_limits<T>::min(), max};
     return dist(rng);
 }
 
@@ -86,6 +89,50 @@ T randomNumber(T max, Trandom &&rng)
 //double randomNumber<double, Trandom>(double max, Trandom &&rng)
 //{
 //    std::uniform_real_distribution<double> dist{{}, max};
+//    return dist(rng);
+//}
+
+
+
+template<typename T, typename Trandom>
+T randomNumber(Trandom &rng)
+{
+    std::uniform_int_distribution<T> dist{std::numeric_limits<T>::min(), std::numeric_limits<T>::max()};
+    return dist(rng);
+}
+
+//template<typename Trandom>
+//float randomNumber<float, Trandom>(Trandom &rng)
+//{
+//    std::uniform_real_distribution<float> dist{{}, 1.f};
+//    return dist(rng);
+//}
+
+//template<typename Trandom>
+//double randomNumber<double, Trandom>(Trandom &rng)
+//{
+//    std::uniform_real_distribution<double> dist{{}, 1.};
+//    return dist(rng);
+//}
+
+template<typename T, typename Trandom>
+T randomNumber(Trandom &&rng)
+{
+    std::uniform_int_distribution<T> dist{std::numeric_limits<T>::min(), std::numeric_limits<T>::max()};
+    return dist(rng);
+}
+
+//template<typename Trandom>
+//float randomNumber<float, Trandom>(Trandom &&rng)
+//{
+//    std::uniform_real_distribution<float> dist{{}, 1.f};
+//    return dist(rng);
+//}
+
+//template<typename Trandom>
+//double randomNumber<double, Trandom>(Trandom &&rng)
+//{
+//    std::uniform_real_distribution<double> dist{{}, 1.};
 //    return dist(rng);
 //}
 
