@@ -11,21 +11,60 @@ namespace cpputils {
 template<typename _Tp>
 struct ArrayView
 {
-    typedef _Tp 	    			      value_type;
-    typedef value_type*			      pointer;
-    typedef const value_type*                       const_pointer;
-    typedef value_type&                   	      reference;
-    typedef const value_type&             	      const_reference;
-    typedef value_type*          		      iterator;
-    typedef const value_type*			      const_iterator;
-    typedef std::size_t                    	      size_type;
-    typedef std::ptrdiff_t                   	      difference_type;
-    typedef std::reverse_iterator<iterator>	      reverse_iterator;
-    typedef std::reverse_iterator<const_iterator>   const_reverse_iterator;
+    using value_type =             _Tp;
+    using pointer =                value_type*;
+    using const_pointer =          const value_type*;
+    using reference =              value_type&;
+    using const_reference =        const value_type&;
+    using iterator =               value_type*;
+    using const_iterator =         const value_type*;
+    using size_type =              std::size_t;
+    using difference_type =        std::ptrdiff_t;
+    using reverse_iterator =       std::reverse_iterator<iterator>;
+    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+
+    constexpr ArrayView() noexcept = default;
 
     constexpr ArrayView(pointer begin, pointer end) noexcept :
         m_begin{begin}, m_end{end}
     {}
+
+    constexpr ArrayView(pointer begin, std::size_t size) noexcept :
+        m_begin{begin}, m_end{begin + size}
+    {}
+
+    constexpr ArrayView(const ArrayView &other) noexcept :
+        m_begin{other.m_begin}, m_end{other.m_end}
+    {}
+
+    constexpr ArrayView(ArrayView &&other) noexcept :
+        m_begin{std::move(other.m_begin)}, m_end{std::move(other.m_end)}
+    {
+        other.m_begin = {};
+        other.m_end = {};
+    }
+
+    ArrayView &operator=(const ArrayView &other) noexcept
+    {
+        m_begin = other.m_begin;
+        m_end = other.m_end;
+        return *this;
+    }
+
+    ArrayView &operator=(ArrayView &&other) noexcept
+    {
+        m_begin = std::move(other.m_begin);
+        other.m_begin = {};
+        m_end = std::move(other.m_end);
+        other.m_end = {};
+        return *this;
+    }
+
+    bool operator==(const ArrayView &other) const noexcept
+    {
+        return m_begin == other.m_begin &&
+               m_end == other.m_end;
+    }
 
     // Iterators.
     constexpr iterator begin() noexcept
@@ -120,7 +159,7 @@ struct ArrayView
     { return m_begin; }
 
 private:
-    pointer m_begin, m_end;
+    pointer m_begin{}, m_end{};
 };
 
 } // namespace cpputils
