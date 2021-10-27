@@ -1,5 +1,8 @@
 #include "color_utils.h"
 
+// system includes
+#include <cstdio>
+
 // 3rdparty lib includes
 #include <fmt/core.h>
 
