@@ -115,4 +115,20 @@ std::string stringReplaceAll(std::string_view search, std::string_view replace, 
     }
     return str;
 }
+
+std::optional<std::string_view> getStringBetween(std::string_view search, std::string_view prefix, std::string_view suffix)
+{
+    auto beginIndex = search.find(prefix);
+    if (beginIndex == std::string_view::npos)
+        return std::nullopt;
+
+    auto restView = search.substr(beginIndex + prefix.size());
+
+    auto endIndex = restView.find(suffix);
+    if (endIndex == std::string_view::npos)
+        return std::nullopt;
+
+    return restView.substr(0, endIndex);
+}
+
 } // namespace cpputils

@@ -47,6 +47,8 @@ std::string stringReplaceAll(char search, std::string_view replace, std::string_
 //std::string stringReplaceAll(std::string_view search, char replace, std::string_view subject);
 std::string stringReplaceAll(std::string_view search, std::string_view replace, std::string_view subject);
 
+std::optional<std::string_view> getStringBetween(std::string_view search, std::string_view prefix, std::string_view suffix);
+
 constexpr const std::string_view allDigitsAndCharacters =
     "0123456789"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
