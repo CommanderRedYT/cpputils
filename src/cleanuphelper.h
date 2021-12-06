@@ -19,6 +19,15 @@ public:
             (*m_cleanup)();
     }
 
+    void cleanup()
+    {
+        if (m_cleanup)
+        {
+            (*m_cleanup)();
+            m_cleanup = std::nullopt;
+        }
+    }
+
     void disarm()
     {
         m_cleanup = std::nullopt;
