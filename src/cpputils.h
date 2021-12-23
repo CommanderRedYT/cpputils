@@ -4,6 +4,7 @@
 #include <utility>
 #include <type_traits>
 #include <algorithm>
+#include <iterator>
 
 namespace cpputils {
 namespace literals {
@@ -117,5 +118,41 @@ template<typename First, typename ... T>
 bool is_in(First &&first, T && ... t)
 {
     return ((first == t) || ...);
+}
+
+template<typename T1, typename T2, typename Tcb>
+void parallelForeach(T1 &container0, T2 &container1, Tcb &&callback)
+{
+    auto iter0 = std::begin(container0);
+    auto iter1 = std::begin(container1);
+    for (;
+         iter0 != std::end(container0) && iter1 != std::cend(container1);
+         iter0++, iter1++)
+        callback(*iter0, *iter1);
+}
+
+template<typename T0, typename T1, typename T2, typename Tcb>
+void parallelForeach(T0 &container0, T1 &container1, T2 &container2, Tcb &&callback)
+{
+    auto iter0 = std::begin(container0);
+    auto iter1 = std::begin(container1);
+    auto iter2 = std::begin(container2);
+    for (;
+         iter0 != std::end(container0) && iter1 != std::cend(container1) && iter2 != std::cend(container2);
+         iter0++, iter1++, iter2++)
+        callback(*iter0, *iter1, *iter2);
+}
+
+template<typename T0, typename T1, typename T2, typename T3, typename Tcb>
+void parallelForeach(T0 &container0, T1 &container1, T2 &container2, T3 &container3, Tcb &&callback)
+{
+    auto iter0 = std::begin(container0);
+    auto iter1 = std::begin(container1);
+    auto iter2 = std::begin(container2);
+    auto iter3 = std::begin(container3);
+    for (;
+         iter0 != std::end(container0) && iter1 != std::cend(container1) && iter2 != std::cend(container2) && iter3 != std::cend(container3);
+         iter0++, iter1++, iter2++, iter3++)
+        callback(*iter0, *iter1, *iter2, *iter3);
 }
 } // namespace cpputils
