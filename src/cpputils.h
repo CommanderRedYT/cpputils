@@ -120,6 +120,27 @@ bool is_in(First &&first, T && ... t)
     return ((first == t) || ...);
 }
 
+template<typename BinaryPredicate, typename First, typename ... T>
+bool is_in_predi(BinaryPredicate p, First &&first, T && ... t)
+{
+    return (p(first, t) || ...);
+}
+
+template<typename T>
+[[nodiscard]] __attribute__ ((warn_unused_result)) constexpr inline __attribute__((__unused__)) bool fuzzyCompare(T p1, T p2);
+
+template<>
+[[nodiscard]] __attribute__ ((warn_unused_result)) constexpr inline __attribute__((__unused__)) bool fuzzyCompare<double>(double p1, double p2)
+{
+    return (std::abs(p1 - p2) * 1000000000000. <= std::min(std::abs(p1), std::abs(p2)));
+}
+
+template<>
+[[nodiscard]] __attribute__ ((warn_unused_result)) constexpr inline __attribute__((__unused__)) bool fuzzyCompare<float>(float p1, float p2)
+{
+    return (std::abs(p1 - p2) * 100000.f <= std::min(std::abs(p1), std::abs(p2)));
+}
+
 template<typename T1, typename T2, typename Tcb>
 void parallelForeach(T1 &container0, T2 &container1, Tcb &&callback)
 {
