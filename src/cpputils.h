@@ -176,4 +176,10 @@ void parallelForeach(T0 &container0, T1 &container1, T2 &container2, T3 &contain
          iter0++, iter1++, iter2++, iter3++)
         callback(*iter0, *iter1, *iter2, *iter3);
 }
+
+template<typename Test, template<typename...> class Ref>
+struct is_specialization : std::false_type {};
+
+template<template<typename...> class Ref, typename... Args>
+struct is_specialization<Ref<Args...>, Ref> : std::true_type {};
 } // namespace cpputils
