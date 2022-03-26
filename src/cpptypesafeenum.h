@@ -17,6 +17,18 @@
 #define DECLARE_TYPESAFE_ENUM_HELPER2(name, ...) case TheEnum::name: return #name;
 #define DECLARE_TYPESAFE_ENUM_HELPER3(name, ...) else if (str == CPP_STRINGIFY(name)) return TheEnum::name;
 #define DECLARE_TYPESAFE_ENUM_HELPER4(name, ...) cb(TheEnum::name, CPP_STRINGIFY(name));
+namespace detail {
+    template<typename T>
+    constexpr bool isTypeSafeEnum(T) { return false; }
+
+    template<typename T>
+    struct IsTypeSafeEnumTrait {
+        static constexpr bool value = isTypeSafeEnum(T{});
+    };
+} // namespace detail
+
+template <typename T>
+constexpr bool IsTypeSafeEnum = detail::IsTypeSafeEnumTrait<T>::value;
 
 #define DECLARE_TYPESAFE_ENUM(Name, Derivation, Values) \
     enum class Name Derivation \
@@ -44,4 +56,8 @@
     { \
         using TheEnum = Name; \
         Values(DECLARE_TYPESAFE_ENUM_HELPER4) \
-    }
+    }  \
+    constexpr inline bool isTypeSafeEnum(Name) { return true; }
+
+
+#define IMPLEMENT_TYPESAFE_ENUM(Name, Derivation, Values)
