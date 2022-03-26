@@ -27,6 +27,9 @@ namespace detail {
     };
 } // namespace detail
 
+template<typename T>
+struct iterateEnum;
+
 template <typename T>
 constexpr bool IsTypeSafeEnum = detail::IsTypeSafeEnumTrait<T>::value;
 
@@ -57,7 +60,14 @@ constexpr bool IsTypeSafeEnum = detail::IsTypeSafeEnumTrait<T>::value;
         using TheEnum = Name; \
         Values(DECLARE_TYPESAFE_ENUM_HELPER4) \
     }  \
-    constexpr inline bool isTypeSafeEnum(Name) { return true; }
-
+    constexpr inline bool isTypeSafeEnum(Name) { return true; }  \
+    template<> \
+    struct iterateEnum<Name> { \
+        template<typename T> \
+        static void iterate(T&&cb) \
+        { \
+            return iterate##Name(std::forward<T>(cb)); \
+        } \
+    };
 
 #define IMPLEMENT_TYPESAFE_ENUM(Name, Derivation, Values)
