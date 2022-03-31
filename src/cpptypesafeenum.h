@@ -13,10 +13,10 @@
 // These macros make it possible to define a typesafe enum with parse and
 // toString methods
 
-#define DECLARE_TYPESAFE_ENUM_HELPER1(name) name,
-#define DECLARE_TYPESAFE_ENUM_HELPER2(name) case TheEnum::name: return #name;
-#define DECLARE_TYPESAFE_ENUM_HELPER3(name) else if (str == CPP_STRINGIFY(name)) return TheEnum::name;
-#define DECLARE_TYPESAFE_ENUM_HELPER4(name) cb(TheEnum::name, CPP_STRINGIFY(name));
+#define DECLARE_TYPESAFE_ENUM_HELPER1(name, ...) name __VA_ARGS__ ,
+#define DECLARE_TYPESAFE_ENUM_HELPER2(name, ...) case TheEnum::name: return #name;
+#define DECLARE_TYPESAFE_ENUM_HELPER3(name, ...) else if (str == CPP_STRINGIFY(name)) return TheEnum::name;
+#define DECLARE_TYPESAFE_ENUM_HELPER4(name, ...) cb(TheEnum::name, CPP_STRINGIFY(name));
 
 #define DECLARE_TYPESAFE_ENUM(Name, Derivation, Values) \
     enum class Name Derivation \
