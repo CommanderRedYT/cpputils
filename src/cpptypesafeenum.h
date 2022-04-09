@@ -45,5 +45,3 @@
         using TheEnum = Name; \
         Values(DECLARE_TYPESAFE_ENUM_HELPER4) \
     }
-
-#define IMPLEMENT_TYPESAFE_ENUM(Name, Derivation, Values)
