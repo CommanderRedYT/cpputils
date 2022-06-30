@@ -61,6 +61,7 @@ template<> inline tl::expected<uint32_t, std::string> fromString<uint32_t>(std::
     return val;
 }
 
+#ifdef ESP_PLATFORM
 template<> inline tl::expected<int, std::string> fromString<int>(std::string_view str)
 {
     int val;
@@ -76,6 +77,7 @@ template<> inline tl::expected<unsigned int, std::string> fromString<unsigned in
         return tl::make_unexpected(fmt::format("invalid unsigned int {}", str));
     return val;
 }
+#endif
 
 template<> inline tl::expected<int64_t, std::string> fromString<int64_t>(std::string_view str)
 {
