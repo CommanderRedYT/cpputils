@@ -34,8 +34,6 @@ inline std::string toString(std::optional<double> val) { if (val) return toStrin
 inline std::string toString(const std::optional<std::string> &val) { if (val) return toString(*val); else return {}; }
 
 bool stringEqualsIgnoreCase(std::string_view a, std::string_view b);
-bool stringStartsWith(std::string_view fullString, std::string_view begin);
-bool stringEndsWith(std::string_view fullString, std::string_view ending);
 
 //void stringReplaceAll(char search, char replace, std::string &subject);
 void stringReplaceAll(char search, std::string_view replace, std::string &subject);
