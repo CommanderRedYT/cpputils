@@ -2,8 +2,82 @@
 
 // system includes
 #include <cctype>
+#include <assert.h>
+
+// 3rdparty lib includes
+#include <fmt/core.h>
 
 namespace cpputils {
+namespace {
+tl::expected<char *, std::string> sodium_bin2hex(char * const hex, const size_t hex_maxlen,
+                                                 const unsigned char * const bin, const size_t bin_len)
+    __attribute__ ((nonnull(1)));
+} // namespace
+
+std::string toHexString(std::basic_string_view<unsigned char> buf)
+{
+    std::string hex(buf.size() * 2 + 1, {});
+    assert(hex.size() == buf.size() * 2 + 1);
+
+    if (const auto result = sodium_bin2hex(hex.data(), hex.size(), buf.data(), buf.size()); !result)
+    {
+//        auto msg = fmt::format("sodium_bin2hex() failed with {}", result.error());
+//        ESP_LOGW(TAG, "%.*s", msg.size(), msg.data());
+        return {};
+    }
+
+    hex.resize(hex.size() - 1);
+    assert(hex.size() == buf.size() * 2);
+
+    return hex;
+}
+
+tl::expected<std::basic_string<unsigned char>, std::string> fromHexString(std::string_view hex)
+{
+    if (hex.size() % 2 != 0)
+        return tl::make_unexpected("hex length not even");
+
+    std::basic_string<unsigned char> result;
+    result.reserve(hex.size() / 2);
+
+    for (auto iter = std::cbegin(hex); iter != std::cend(hex); )
+    {
+        union {
+            unsigned char c;
+            struct {
+                unsigned char nibble1:4;
+                unsigned char nibble0:4;
+            } nibbles;
+        };
+
+        switch (const auto c = *iter)
+        {
+        case '0'...'9': nibbles.nibble0 = c - '0'; break;
+        case 'A'...'F': nibbles.nibble0 = c - 'A' + 10; break;
+        case 'a'...'f': nibbles.nibble0 = c - 'a' + 10; break;
+        default:
+            return tl::make_unexpected(fmt::format("invalid character {} at pos {}", c, std::distance(std::begin(hex), iter)));
+        }
+
+        iter++;
+
+        switch (const auto c = *iter)
+        {
+        case '0'...'9': nibbles.nibble1 = c - '0'; break;
+        case 'A'...'F': nibbles.nibble1 = c - 'A' + 10; break;
+        case 'a'...'f': nibbles.nibble1 = c - 'a' + 10; break;
+        default:
+            return tl::make_unexpected(fmt::format("invalid character {} at pos {}", c, std::distance(std::begin(hex), iter)));
+        }
+
+        iter++;
+
+        result.push_back(c);
+    }
+
+    return result;
+}
+
 bool stringEqualsIgnoreCase(std::string_view a, std::string_view b)
 {
     if (a.size() != b.size())
@@ -118,4 +192,33 @@ std::optional<std::string_view> getStringBetween(std::string_view search, std::s
     return restView.substr(0, endIndex);
 }
 
+namespace {
+/* Derived from original code by CodesInChaos */
+tl::expected<char *, std::string>
+sodium_bin2hex(char *const hex, const size_t hex_maxlen,
+               const unsigned char *const bin, const size_t bin_len)
+{
+    size_t       i = (size_t) 0U;
+    unsigned int x;
+    int          b;
+    int          c;
+
+    if (bin_len >= SIZE_MAX / 2 || hex_maxlen <= bin_len * 2U) {
+        return tl::make_unexpected("misuse because bin_len >= SIZE_MAX / 2 || hex_maxlen <= bin_len * 2U");
+    }
+    while (i < bin_len) {
+        c = bin[i] & 0xf;
+        b = bin[i] >> 4;
+        x = (unsigned char) (87U + c + (((c - 10U) >> 8) & ~38U)) << 8 |
+            (unsigned char) (87U + b + (((b - 10U) >> 8) & ~38U));
+        hex[i * 2U] = (char) x;
+        x >>= 8;
+        hex[i * 2U + 1U] = (char) x;
+        i++;
+    }
+    hex[i * 2U] = 0U;
+
+    return hex;
+}
+} // namespace
 } // namespace cpputils

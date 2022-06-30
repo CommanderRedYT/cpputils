@@ -7,6 +7,9 @@
 #include <random>
 #include <algorithm>
 
+// 3rdparty lib includes
+#include <tl/expected.hpp>
+
 namespace cpputils {
 inline std::string toString(bool val) { return val ? "true" : "false"; }
 inline std::string toString(int8_t val) { return std::to_string(val); }
@@ -32,6 +35,14 @@ inline std::string toString(std::optional<uint64_t> val) { if (val) return toStr
 inline std::string toString(std::optional<float> val) { if (val) return toString(*val); else return {}; }
 inline std::string toString(std::optional<double> val) { if (val) return toString(*val); else return {}; }
 inline std::string toString(const std::optional<std::string> &val) { if (val) return toString(*val); else return {}; }
+
+std::string toHexString(std::basic_string_view<unsigned char> buf);
+inline std::string toHexString(std::string_view str)
+{
+    return toHexString(std::basic_string_view<unsigned char>{reinterpret_cast<const unsigned char *>(str.data()), str.size()});
+}
+
+tl::expected<std::basic_string<unsigned char>, std::string> fromHexString(std::string_view hex);
 
 bool stringEqualsIgnoreCase(std::string_view a, std::string_view b);
 
