@@ -44,6 +44,12 @@ inline std::string toHexString(std::string_view str)
 
 tl::expected<std::basic_string<unsigned char>, std::string> fromHexString(std::string_view hex);
 
+std::string toBase64String(std::basic_string_view<unsigned char> buf);
+inline std::string toBase64String(std::string_view str)
+{
+    return toBase64String(std::basic_string_view<unsigned char>{reinterpret_cast<const unsigned char *>(str.data()), str.size()});
+}
+
 bool stringEqualsIgnoreCase(std::string_view a, std::string_view b);
 
 //void stringReplaceAll(char search, char replace, std::string &subject);

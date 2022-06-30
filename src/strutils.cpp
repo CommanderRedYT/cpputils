@@ -78,6 +78,35 @@ tl::expected<std::basic_string<unsigned char>, std::string> fromHexString(std::s
     return result;
 }
 
+std::string toBase64String(std::basic_string_view<unsigned char> buf)
+{
+    constexpr std::string_view base64_chars{"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"};
+
+    std::string out;
+
+    int val = 0;
+    int valb = -6;
+    for (unsigned char c : buf)
+    {
+        val = (val << 8) + c;
+        valb += 8;
+
+        while (valb >= 0)
+        {
+            out.push_back(base64_chars[(val>>valb)&0x3F]);
+            valb -= 6;
+        }
+    }
+
+    if (valb>-6)
+        out.push_back(base64_chars[((val << 8) >> (valb + 8)) & 0x3F]);
+
+    while (out.size() % 4)
+        out.push_back('=');
+
+    return out;
+}
+
 bool stringEqualsIgnoreCase(std::string_view a, std::string_view b)
 {
     if (a.size() != b.size())
