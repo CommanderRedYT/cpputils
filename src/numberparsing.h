@@ -65,7 +65,7 @@ template<> inline tl::expected<uint32_t, std::string> fromString<uint32_t>(std::
 template<> inline tl::expected<int, std::string> fromString<int>(std::string_view str)
 {
     int val;
-    if (std::sscanf(str.data(), "%" SCNi32, &val) != 1)
+    if (std::sscanf(str.data(), "%i", &val) != 1)
         return tl::make_unexpected(fmt::format("invalid int {}", str));
     return val;
 }
@@ -73,7 +73,7 @@ template<> inline tl::expected<int, std::string> fromString<int>(std::string_vie
 template<> inline tl::expected<unsigned int, std::string> fromString<unsigned int>(std::string_view str)
 {
     unsigned int val;
-    if (std::sscanf(str.data(), "%" SCNu32, &val) != 1)
+    if (std::sscanf(str.data(), "%u", &val) != 1)
         return tl::make_unexpected(fmt::format("invalid unsigned int {}", str));
     return val;
 }
