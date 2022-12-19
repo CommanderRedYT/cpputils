@@ -18,6 +18,8 @@ inline std::string toString(int16_t val) { return std::to_string(val); }
 inline std::string toString(uint16_t val) { return std::to_string(val); }
 inline std::string toString(int32_t val) { return std::to_string(val); }
 inline std::string toString(uint32_t val) { return std::to_string(val); }
+inline std::string toString(int val) { return std::to_string(val); }
+inline std::string toString(unsigned int val) { return std::to_string(val); }
 inline std::string toString(int64_t val) { return std::to_string(val); }
 inline std::string toString(uint64_t val) { return std::to_string(val); }
 inline std::string toString(float val) { return std::to_string(val); }
@@ -30,6 +32,8 @@ inline std::string toString(std::optional<int16_t> val) { if (val) return toStri
 inline std::string toString(std::optional<uint16_t> val) { if (val) return toString(*val); else return {}; }
 inline std::string toString(std::optional<int32_t> val) { if (val) return toString(*val); else return {}; }
 inline std::string toString(std::optional<uint32_t> val) { if (val) return toString(*val); else return {}; }
+inline std::string toString(std::optional<int> val) { if (val) return toString(*val); else return {}; }
+inline std::string toString(std::optional<unsigned int> val) { if (val) return toString(*val); else return {}; }
 inline std::string toString(std::optional<int64_t> val) { if (val) return toString(*val); else return {}; }
 inline std::string toString(std::optional<uint64_t> val) { if (val) return toString(*val); else return {}; }
 inline std::string toString(std::optional<float> val) { if (val) return toString(*val); else return {}; }
