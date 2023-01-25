@@ -5,6 +5,7 @@
 #include <type_traits>
 #include <algorithm>
 #include <iterator>
+#include <array>
 
 namespace cpputils {
 namespace literals {
@@ -177,9 +178,21 @@ void parallelForeach(T0 &container0, T1 &container1, T2 &container2, T3 &contain
         callback(*iter0, *iter1, *iter2, *iter3);
 }
 
-template<typename Test, template<typename...> class Ref>
+template<typename, template<typename...> class Ref>
 struct is_specialization : std::false_type {};
 
 template<template<typename...> class Ref, typename... Args>
 struct is_specialization<Ref<Args...>, Ref> : std::true_type {};
+
+template<typename ...T>
+constexpr bool is_specialization_v = is_specialization<T...>::value;
+
+template<class T>
+struct is_std_array : std::false_type {};
+
+template<class T, size_t N>
+struct is_std_array<std::array<T, N>> : std::true_type {};
+
+template<class T>
+constexpr bool is_std_array_v = is_std_array<std::remove_cvref_t<T>>::value;
 } // namespace cpputils
