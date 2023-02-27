@@ -2,9 +2,9 @@
 
 // system includes
 #include <string>
+#include <expected>
 
 // 3rdparty lib includes
-#include <tl/expected.hpp>
 #include <fmt/core.h>
 
 // local includes
@@ -32,12 +32,12 @@
         } \
         return fmt::format("Unknown " #Name "({})", int(value)); \
     } \
-    inline tl::expected<Name, std::string> parse##Name(std::string_view str) \
+    inline std::expected<Name, std::string> parse##Name(std::string_view str) \
     { \
         using TheEnum = Name; \
         if (false) {} \
         Values(DECLARE_TYPESAFE_ENUM_HELPER3) \
-        return tl::make_unexpected(fmt::format("invalid " #Name " ({})", str)); \
+        return std::unexpected(fmt::format("invalid " #Name " ({})", str)); \
     } \
     template<typename T> \
     void iterate##Name(T &&cb) \

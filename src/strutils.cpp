@@ -9,7 +9,7 @@
 
 namespace cpputils {
 namespace {
-tl::expected<char *, std::string> sodium_bin2hex(char * const hex, const size_t hex_maxlen,
+std::expected<char *, std::string> sodium_bin2hex(char * const hex, const size_t hex_maxlen,
                                                  const unsigned char * const bin, const size_t bin_len)
     __attribute__ ((nonnull(1)));
 } // namespace
@@ -32,10 +32,10 @@ std::string toHexString(std::basic_string_view<unsigned char> buf)
     return hex;
 }
 
-tl::expected<std::basic_string<unsigned char>, std::string> fromHexString(std::string_view hex)
+std::expected<std::basic_string<unsigned char>, std::string> fromHexString(std::string_view hex)
 {
     if (hex.size() % 2 != 0)
-        return tl::make_unexpected("hex length not even");
+        return std::unexpected("hex length not even");
 
     std::basic_string<unsigned char> result;
     result.reserve(hex.size() / 2);
@@ -56,7 +56,7 @@ tl::expected<std::basic_string<unsigned char>, std::string> fromHexString(std::s
         case 'A'...'F': nibbles.nibble0 = c - 'A' + 10; break;
         case 'a'...'f': nibbles.nibble0 = c - 'a' + 10; break;
         default:
-            return tl::make_unexpected(fmt::format("invalid character {} at pos {}", c, std::distance(std::begin(hex), iter)));
+            return std::unexpected(fmt::format("invalid character {} at pos {}", c, std::distance(std::begin(hex), iter)));
         }
 
         iter++;
@@ -67,7 +67,7 @@ tl::expected<std::basic_string<unsigned char>, std::string> fromHexString(std::s
         case 'A'...'F': nibbles.nibble1 = c - 'A' + 10; break;
         case 'a'...'f': nibbles.nibble1 = c - 'a' + 10; break;
         default:
-            return tl::make_unexpected(fmt::format("invalid character {} at pos {}", c, std::distance(std::begin(hex), iter)));
+            return std::unexpected(fmt::format("invalid character {} at pos {}", c, std::distance(std::begin(hex), iter)));
         }
 
         iter++;
@@ -275,7 +275,7 @@ std::optional<std::string_view> getStringBetween(std::string_view search, std::s
 
 namespace {
 /* Derived from original code by CodesInChaos */
-tl::expected<char *, std::string>
+std::expected<char *, std::string>
 sodium_bin2hex(char *const hex, const size_t hex_maxlen,
                const unsigned char *const bin, const size_t bin_len)
 {
@@ -285,7 +285,7 @@ sodium_bin2hex(char *const hex, const size_t hex_maxlen,
     int          c;
 
     if (bin_len >= SIZE_MAX / 2 || hex_maxlen <= bin_len * 2U) {
-        return tl::make_unexpected("misuse because bin_len >= SIZE_MAX / 2 || hex_maxlen <= bin_len * 2U");
+        return std::unexpected("misuse because bin_len >= SIZE_MAX / 2 || hex_maxlen <= bin_len * 2U");
     }
     while (i < bin_len) {
         c = bin[i] & 0xf;

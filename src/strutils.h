@@ -6,9 +6,7 @@
 #include <string_view>
 #include <random>
 #include <algorithm>
-
-// 3rdparty lib includes
-#include <tl/expected.hpp>
+#include <expected>
 
 namespace cpputils {
 inline std::string toString(bool val) { return val ? "true" : "false"; }
@@ -46,7 +44,7 @@ inline std::string toHexString(std::string_view str)
     return toHexString(std::basic_string_view<unsigned char>{reinterpret_cast<const unsigned char *>(str.data()), str.size()});
 }
 
-tl::expected<std::basic_string<unsigned char>, std::string> fromHexString(std::string_view hex);
+std::expected<std::basic_string<unsigned char>, std::string> fromHexString(std::string_view hex);
 
 std::string toBase64String(std::basic_string_view<unsigned char> buf);
 inline std::string toBase64String(std::string_view str)

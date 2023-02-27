@@ -12,7 +12,7 @@ std::string toString(ColorHelper color)
     return fmt::format("#{:02X}{:02X}{:02X}", color.r, color.g, color.b);
 }
 
-tl::expected<ColorHelper, std::string> parseColor(std::string_view str)
+std::expected<ColorHelper, std::string> parseColor(std::string_view str)
 {
     // input may be "#FFF" or "#FFFFFF" or "#FFFFFFFF"
 
@@ -27,7 +27,7 @@ tl::expected<ColorHelper, std::string> parseColor(std::string_view str)
         return helper;
     }
 
-    return tl::make_unexpected(fmt::format("invalid color {}", str));
+    return std::unexpected(fmt::format("invalid color {}", str));
 }
 
 } // namespace cpputils

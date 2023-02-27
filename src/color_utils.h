@@ -4,9 +4,7 @@
 #include <string>
 #include <string_view>
 #include <array>
-
-// 3rdparty lib includes
-#include <tl/expected.hpp>
+#include <expected>
 
 namespace cpputils {
 struct ColorHelper
@@ -53,7 +51,7 @@ struct HsvColor
 };
 
 std::string toString(ColorHelper color);
-tl::expected<ColorHelper, std::string> parseColor(std::string_view str);
+std::expected<ColorHelper, std::string> parseColor(std::string_view str);
 
 inline uint32_t colorToNumber(ColorHelper color)
 {

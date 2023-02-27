@@ -24,7 +24,6 @@ set(sources
 )
 
 set(dependencies
-    expected
     fmt
 )
 
