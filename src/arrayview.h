@@ -33,6 +33,11 @@ struct ArrayView
         m_begin{begin}, m_end{begin + size}
     {}
 
+    template<std::size_t N>
+    constexpr explicit ArrayView(value_type (&array)[N]) noexcept :
+        m_begin{array}, m_end{array + N}
+    {}
+
     constexpr ArrayView(const ArrayView &other) noexcept :
         m_begin{other.m_begin}, m_end{other.m_end}
     {}
