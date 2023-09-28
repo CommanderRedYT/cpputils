@@ -21,9 +21,10 @@ std::expected<ColorHelper, std::string> parseColor(std::string_view str)
 
     if (ColorHelper helper; std::sscanf(str.data(), "#%1hhx%1hhx%1hhx", &helper.r, &helper.g, &helper.b) == 3)
     {
-        helper.r <<= 4;
-        helper.g <<= 4;
-        helper.b <<= 4;
+        // #F00 -> #FF0000
+        helper.r *= 0x11;
+        helper.g *= 0x11;
+        helper.b *= 0x11;
         return helper;
     }
 
