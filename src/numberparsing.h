@@ -94,4 +94,20 @@ template<> inline std::expected<uint64_t, std::string> fromString<uint64_t>(std:
         return std::unexpected(fmt::format("invalid uint64_t {}", str));
     return val;
 }
+
+template<> inline std::expected<float, std::string> fromString<float>(std::string_view str)
+{
+    float val;
+    if (std::sscanf(str.data(), "%f", &val) != 1)
+        return std::unexpected(fmt::format("invalid float {}", str));
+    return val;
+}
+
+template<> inline std::expected<double, std::string> fromString<double>(std::string_view str)
+{
+    double val;
+    if (std::sscanf(str.data(), "%lf", &val) != 1)
+        return std::unexpected(fmt::format("invalid double {}", str));
+    return val;
+}
 } // namespace cpputils
