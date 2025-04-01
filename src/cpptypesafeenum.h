@@ -3,9 +3,7 @@
 // system includes
 #include <string>
 #include <expected>
-
-// 3rdparty lib includes
-#include <fmt/core.h>
+#include <format>
 
 // local includes
 #include "cppmacros.h"
@@ -38,14 +36,14 @@ struct parseEnum;
         using TheEnum = Name; \
         Values(DECLARE_TYPESAFE_ENUM_HELPER2) \
         } \
-        return fmt::format("Unknown " #Name "({})", int(value)); \
+        return std::format("Unknown " #Name "({})", int(value)); \
     } \
     inline std::expected<Name, std::string> parse##Name(std::string_view str) \
     { \
         using TheEnum = Name; \
         if (false) {} \
         Values(DECLARE_TYPESAFE_ENUM_HELPER3) \
-        return std::unexpected(fmt::format("invalid " #Name " ({})", str)); \
+        return std::unexpected(std::format("invalid " #Name " ({})", str)); \
     } \
     template<typename T> \
     void iterate##Name(T &&cb) \

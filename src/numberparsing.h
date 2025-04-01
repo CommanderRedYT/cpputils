@@ -3,12 +3,10 @@
 // system includes
 #include <cstdint>
 #include <cstdio>
+#include <expected>
+#include <format>
 #include <inttypes.h>
 #include <string>
-#include <expected>
-
-// 3rdparty lib includes
-#include <fmt/format.h>
 
 namespace cpputils {
 template<typename T> std::expected<T, std::string> fromString(std::string_view str) = delete;

@@ -23,18 +23,12 @@ set(sources
     src/strutils.cpp
 )
 
-set(dependencies
-    fmt
-)
-
 idf_component_register(
     INCLUDE_DIRS
         src
     SRCS
         ${headers}
         ${sources}
-    REQUIRES
-        ${dependencies}
 )
 
 target_compile_options(${COMPONENT_TARGET}

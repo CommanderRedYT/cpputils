@@ -2,14 +2,12 @@
 
 // system includes
 #include <cstdio>
-
-// 3rdparty lib includes
-#include <fmt/core.h>
+#include <format>
 
 namespace cpputils {
 std::string toString(ColorHelper color)
 {
-    return fmt::format("#{:02X}{:02X}{:02X}", color.r, color.g, color.b);
+    return std::format("#{:02X}{:02X}{:02X}", color.r, color.g, color.b);
 }
 
 std::expected<ColorHelper, std::string> parseColor(std::string_view str)
@@ -28,7 +26,7 @@ std::expected<ColorHelper, std::string> parseColor(std::string_view str)
         return helper;
     }
 
-    return std::unexpected(fmt::format("invalid color {}", str));
+    return std::unexpected(std::format("invalid color {}", str));
 }
 
 } // namespace cpputils

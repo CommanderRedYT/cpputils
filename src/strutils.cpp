@@ -2,10 +2,9 @@
 
 // system includes
 #include <cctype>
+#include <format>
 #include <assert.h>
 
-// 3rdparty lib includes
-#include <fmt/core.h>
 
 namespace cpputils {
 namespace {
@@ -56,7 +55,7 @@ std::expected<std::basic_string<unsigned char>, std::string> fromHexString(std::
         case 'A'...'F': nibbles.nibble0 = c - 'A' + 10; break;
         case 'a'...'f': nibbles.nibble0 = c - 'a' + 10; break;
         default:
-            return std::unexpected(fmt::format("invalid character {} at pos {}", c, std::distance(std::begin(hex), iter)));
+            return std::unexpected(std::format("invalid character {} at pos {}", c, std::distance(std::begin(hex), iter)));
         }
 
         iter++;
@@ -67,7 +66,7 @@ std::expected<std::basic_string<unsigned char>, std::string> fromHexString(std::
         case 'A'...'F': nibbles.nibble1 = c - 'A' + 10; break;
         case 'a'...'f': nibbles.nibble1 = c - 'a' + 10; break;
         default:
-            return std::unexpected(fmt::format("invalid character {} at pos {}", c, std::distance(std::begin(hex), iter)));
+            return std::unexpected(std::format("invalid character {} at pos {}", c, std::distance(std::begin(hex), iter)));
         }
 
         iter++;
