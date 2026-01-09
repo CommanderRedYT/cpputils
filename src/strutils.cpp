@@ -20,7 +20,7 @@ std::string toHexString(std::basic_string_view<unsigned char> buf)
 
     if (const auto result = sodium_bin2hex(hex.data(), hex.size(), buf.data(), buf.size()); !result)
     {
-//        auto msg = fmt::format("sodium_bin2hex() failed with {}", result.error());
+//        auto msg = std::format("sodium_bin2hex() failed with {}", result.error());
 //        ESP_LOGW(TAG, "%.*s", msg.size(), msg.data());
         return {};
     }
